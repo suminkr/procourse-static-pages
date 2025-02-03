@@ -68,7 +68,7 @@ StaticPage.reopenClass({
         var cooked = "";
       }
       else {
-        var cooked = new Handlebars.SafeString(new PrettyText(getOpts()).cook(object.raw));
+        var cooked = Ember.String.htmlSafe(new PrettyText(getOpts()).cook(object.raw));
       }
       data = {
         ...data,
