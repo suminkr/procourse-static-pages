@@ -5,6 +5,7 @@ import EmberObject, { observer } from '@ember/object';
 import { Array as EmberArray } from '@ember/array';
 import { Handlebars } from 'discourse-common/lib/raw-handlebars';
 import { getURLWithCDN } from "discourse-common/lib/get-url";
+import { htmlSafe } from '@ember/template'; // 추가된 부분
 
 const StaticPage = EmberObject.extend({
 
@@ -55,7 +56,7 @@ StaticPage.reopenClass({
     if (object.get('disableSave')) return;
 
     object.set('savingStatus', I18n.t('saving'));
-    object.set('saving',true);
+    object.set('saving', true);
 
     var data = { active: object.active };
 
@@ -68,7 +69,9 @@ StaticPage.reopenClass({
         var cooked = "";
       }
       else {
-        var cooked = Ember.String.htmlSafe(new PrettyText(getOpts()).cook(object.raw));
+        // Ember.String.htmlSafe 대신 htmlSafe를 사용합니다.
+        let cookedSafe = htmlSafe(new PrettyText(getOpts()).cook(object.raw));
+        var cooked = cookedSafe.toString();
       }
       data = {
         ...data,
@@ -76,7 +79,7 @@ StaticPage.reopenClass({
         slug: object.slug,
         group: object.group,
         raw: object.raw,
-        cooked: cooked.string,
+        cooked: cooked,
         custom_slug: object.custom_slug,
         html: object.html,
         html_content: object.html_content
