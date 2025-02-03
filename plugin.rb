@@ -10,7 +10,6 @@ enabled_site_setting :procourse_static_pages_enabled
 add_admin_route 'procourse_static_pages.title', 'procourse-static-pages'
 
 register_asset "stylesheets/pc-static-pages.scss"
-register_asset "javascripts/update-logo-link.js"
 
 load File.expand_path('../lib/pc_static_pages/engine.rb', __FILE__)
 
