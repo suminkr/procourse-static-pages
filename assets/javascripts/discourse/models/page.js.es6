@@ -5,7 +5,6 @@ import EmberObject, { observer } from '@ember/object';
 import { Array as EmberArray } from '@ember/array';
 import { Handlebars } from 'discourse-common/lib/raw-handlebars';
 import { getURLWithCDN } from "discourse-common/lib/get-url";
-import { htmlSafe } from '@ember/template'; // 추가된 부분
 
 const StaticPage = EmberObject.extend({
 
@@ -69,9 +68,7 @@ StaticPage.reopenClass({
         var cooked = "";
       }
       else {
-        // Ember.String.htmlSafe 대신 htmlSafe를 사용합니다.
-        let cookedSafe = htmlSafe(new PrettyText(getOpts()).cook(object.raw));
-        var cooked = cookedSafe.toString();
+        var cooked = object.raw;
       }
       data = {
         ...data,
